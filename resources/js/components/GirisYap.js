@@ -3,7 +3,7 @@ import Header from './Header'
 import Axios from 'axios'
 import { Redirect } from 'react-router-dom'
 
-export default function GirisYap() {
+export default function GirisYap(props) {
 
     const [kullanici, setKullanici] = useState({ email: "", password: "" })
     const [isLoggedIn, setisLoggedIn] = useState(false)
@@ -17,35 +17,18 @@ export default function GirisYap() {
         }
 
         Axios.post('/api/auth/giris', giris).then(res => {
-            /* if (res.data.success) {
-                let userData = {
-                    id: res.data.id,
-                    name: res.data.name,
-                    email: res.data.email,
-                    access_token: res.data.access_token,
-                };
-
-                let appState = {
-                    isLoggedIn: true,
-                    user: userData
-                };
-
-                localStorage["appState"] = JSON.stringify(appState);
-
-                setisLoggedIn(appState.isLoggedIn)
-                location.reload()
-            } */
-            console.log(res.data)
+            if (res.data) {
+                (props.location.degistir || 1).fun
+            }
         })
     }
+
     function handleChange(e) {
         setKullanici({
             ...kullanici,
             [event.target.name]: event.target.value
         })
     }
-
-   
 
     return (
         <div>

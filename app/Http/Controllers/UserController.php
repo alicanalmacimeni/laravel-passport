@@ -2,13 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
+    public function cikis(Request $request)
+    {
+        setcookie('token', null, -1, '/');
+        $request->user()->token()->revoke();
+        return response()->json([
+            'message' => 'Successfully logged out'
+        ]);
+    }
+
     public function giris(Request $request)
     {
         $request->validate([
@@ -29,25 +36,17 @@ class UserController extends Controller
 
         $token->save();
 
-        /* return response()->json([
-            'success' => true,
-            'id' => $user->id,
-            'name' => $user->name,
-            'email' => $user->email,
-            'access_token' => $tokenResult->accessToken,
-            'token_type' => 'Bearer'
-        ]); */
-
         setcookie(
-            $name = "TestCookie",
-            $value = "asdasd121212",
-            $expire = 3600,
-            $path = "",
-            $domain = "",
+            $name = "token",
+            $value = $tokenResult->accessToken,
+            $expire = time() + 3600,
+            $path = "/",
+            $domain = null,
             $secure = false,
             $httponly = true
         );
-        
-        return $_COOKIE['TestCookie'];
+
+        return true;
+
     }
 }

@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => 'auth'], function () {
-    
+
     Route::post('giris', 'UserController@giris');
     Route::post('kayit-ol', 'AuthController@signup');
 
@@ -23,5 +23,6 @@ Route::group(['prefix' => 'auth'], function () {
         Route::get('icerikler', function (Request $request) {
             return 'çok önemli içerikler burada geeel';
         });
+        Route::delete('cikis', 'UserController@cikis');
     });
 });

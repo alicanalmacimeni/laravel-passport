@@ -26,7 +26,7 @@ Route::get('/kayit-ol', function () {
     return view('welcome');
 });
 
-Route::middleware('auth')->get('/icerik', function () {
+Route::get('/icerik', function () {
     return view('welcome');
 });
 

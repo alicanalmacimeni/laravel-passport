@@ -69761,7 +69761,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-function GirisYap() {
+function GirisYap(props) {
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({
     email: "",
     password: ""
@@ -69782,22 +69782,9 @@ function GirisYap() {
       password: kullanici.password
     };
     axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/api/auth/giris', giris).then(function (res) {
-      /* if (res.data.success) {
-          let userData = {
-              id: res.data.id,
-              name: res.data.name,
-              email: res.data.email,
-              access_token: res.data.access_token,
-          };
-            let appState = {
-              isLoggedIn: true,
-              user: userData
-          };
-            localStorage["appState"] = JSON.stringify(appState);
-            setisLoggedIn(appState.isLoggedIn)
-          location.reload()
-      } */
-      console.log(res.data);
+      if (res.data) {
+        (props.location.degistir || 1).fun;
+      }
     });
   }
 
@@ -69844,6 +69831,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -69859,11 +69848,22 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 function Header() {
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
       _useState2 = _slicedToArray(_useState, 2),
       isLoggedIn = _useState2[0],
       setisLoggedIn = _useState2[1];
+
+  function changeisLoggedIn() {
+    console.log("buraya geldiiiiiiiiiiiii............");
+  }
+
+  function handleClick() {
+    axios__WEBPACK_IMPORTED_MODULE_2___default.a["delete"]('/api/auth/cikis').then(function (res) {
+      return console.log(res.data);
+    });
+  }
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
     to: "/"
@@ -69874,13 +69874,19 @@ function Header() {
   }, "Kay\u0131t Ol"), " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "login"
   }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-    to: "/giris"
+    to: {
+      pathname: "/giris",
+      degistir: {
+        changeisLoggedIn: changeisLoggedIn
+      }
+    }
   }, "Giri\u015F Yap"), " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
     to: "/icerik"
   }, "\u0130\xE7erik Sayfas\u0131"), " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
     className: "login"
   }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-    to: "/"
+    to: "#",
+    onClick: handleClick
   }, "\xC7\u0131k\u0131\u015F Yap"), " ")));
 }
 
@@ -69908,16 +69914,9 @@ __webpack_require__.r(__webpack_exports__);
 
 function IcerikSayfasi() {
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    if (localStorage["appState"]) {
-      var headers = {
-        Authorization: "Bearer ".concat(JSON.parse(localStorage["appState"]).user.access_token)
-      };
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/api/auth/icerikler', {
-        headers: headers
-      }).then(function (res) {
-        return console.log(res.data);
-      });
-    }
+    axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/api/auth/icerikler').then(function (res) {
+      return console.log(res.data);
+    });
   }, []);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Header__WEBPACK_IMPORTED_MODULE_1__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."));
 }

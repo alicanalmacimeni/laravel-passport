@@ -5,14 +5,9 @@ import Axios from 'axios'
 export default function IcerikSayfasi() {
 
     useEffect(() => {
-        if (localStorage["appState"]) {
-            const headers = {
-                Authorization: `Bearer ${JSON.parse(localStorage["appState"]).user.access_token}`
-            }
-            Axios.get('/api/auth/icerikler', { headers }).then(res => (
-                console.log(res.data)
-            ))
-        }
+        Axios.get('/api/auth/icerikler').then(res => (
+            console.log(res.data)
+        ))
     }, [])
 
     return (
